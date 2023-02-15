@@ -17,8 +17,9 @@
 
 typedef struct Node
 {
-  struct Node* previous;
-  struct Node* next;
+  // NOTE: this is already a doubly linked list.
+  struct Node *previous;
+  struct Node *next;
 
   int content;
 } Node;
@@ -27,7 +28,7 @@ typedef struct Node
 typedef struct List
 {
   Node* root;
-  Node* top;
+  Node* top;  // i'm storing top node address to facilitate iteration
 } List;
 
 
@@ -63,5 +64,3 @@ void append_node(List* list, int top_content)
   list->top->next = top_node;
   list->top = top_node;
 }
-
-
