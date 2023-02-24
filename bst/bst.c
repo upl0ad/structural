@@ -18,26 +18,6 @@ Node *new_node(int content)
   return node;
 }
 
-// NOTE: recursion based insertion algorithm
-/* void insert_node(Node *node, Node *inst) */
-/* { */
-/*   if (current->content > inst->content) { */
-/*     if (current->left == NULL) { */
-/*       current->left = inst; */
-/*       return; */
-/*     } */
-/*     insert_node(current->left, inst); */
-/*   } */
-
-/*   if(current->content < inst->content) { */
-/*     if (current->right == NULL) { */
-/*       current->right = inst; */
-/*       return; */
-/*     } */
-/*     insert_node(current->right, inst); */
-/*   } */
-/* } */
-
 // NOTE: iteration based insertion algorithm
 void insert_node(Node *root, int content)
 {
@@ -49,7 +29,6 @@ void insert_node(Node *root, int content)
 
     if (current->content > content) {
       if (current->left == NULL) {
-        /* printf("inserting %d in left\n", content); */
         current->left = new_node(content);
         break;
       }
@@ -58,7 +37,6 @@ void insert_node(Node *root, int content)
 
     if (current->content < content) {
       if (current->right == NULL) {
-        /* printf("inserting %d in right\n", content); */
         current->right = new_node(content);
         break;
       }
@@ -67,31 +45,38 @@ void insert_node(Node *root, int content)
   }
 }
 
-// NOTE: binary tree traversal algorithm.
-void traverse_over(Node *root)
+// will traverse throughout every node in tree and
+// print their dot information
+void dot_traversal(Node *nd)
 {
-}
+  if (nd == NULL)
+    return;
 
-void dump_dot_info(Node *nd)
-{
-  printf("    %d -> %d;\n", nd->content, nd->left->content);
-  printf("    %d -> %d;\n", nd->content, nd->right->content);
+  dot_traversal(nd->left);
+
+  if (nd->left != NULL)
+    printf("    %d -> %d;\n", nd->content, nd->left->content);
+
+  if (nd->right != NULL)
+    printf("    %d -> %d;\n", nd->content, nd->right->content);
+
+  dot_traversal(nd->right);
 }
 
 int main(void)
 {
   Node *root = new_node(50);
 
-  for (int i = 0; i < 50; i++) {
-    insert_node(root, i);
-  }
-
-  for (int i = 51; i < 100; i++) {
-    insert_node(root, i);
-  }
+  insert_node(root, 8);
+  insert_node(root, 3);
+  insert_node(root, 6);
+  insert_node(root, 1);
+  insert_node(root, 10);
+  insert_node(root, 11);
+  insert_node(root, 9);
 
   printf("digraph BST {\n");
-  iterate_over(root);
+    dot_traversal(root);
   printf("}\n");
 
   return 0;
